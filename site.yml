@@ -1,0 +1,32 @@
+---
+- hosts: 3.87.245.58
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create index.html
+      copy:
+        content: |
+          <html>
+          <head>
+            <title>My Website</title>
+          </head>
+          <body>
+            <h1>Hello, World!</h1>
+            <p>Welcome to my simple website hosted on AWS EC2 using Ansible!</p>
+          </body>
+          </html>
+        dest: /var/www/html/index.html
